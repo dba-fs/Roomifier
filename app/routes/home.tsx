@@ -54,7 +54,7 @@ export default function Home() {
               <p>Supports JPG, PNG, formats up to 10MB</p>
             </div>
 
-            <p>Upload images</p>
+            <Upload />
           </div>
         </div>
       </section>
