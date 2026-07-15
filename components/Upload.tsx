@@ -31,7 +31,7 @@ const Upload = () => {
                                 "Sign in or sign up with Puter to upload"
                             )}
                         </p>
-                        <p className="help">Maxmimum file size 50MB.</p>
+                        <p className="help">Maximum file size 50MB.</p>
                     </div>
                 </div>
             ) : (

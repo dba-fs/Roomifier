@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import Navbar from "../../components/NavBar";
 import { ArrowRight, ArrowUpRight, Clock, Layers } from "lucide-react";
+import Upload from "../../components/Upload";
 import { Button } from "../../components/ui/Button";
 
 export function meta({}: Route.MetaArgs) {
