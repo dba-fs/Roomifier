@@ -3,6 +3,7 @@ import Navbar from "../../components/NavBar";
 import { ArrowRight, ArrowUpRight, Clock, Layers } from "lucide-react";
 import Upload from "../../components/Upload";
 import { Button } from "../../components/ui/Button";
+import { useNavigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,6 +13,17 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  const handleUploadComplete = async (base64Image: string) => {
+    const newId = Date.now().toString();
+
+    navigate(`/visualizer/${newId}`);
+
+    return true;
+
+  }
+
   return (
     <div className="home">
       <Navbar />
@@ -55,7 +67,9 @@ export default function Home() {
               <p>Supports JPG, PNG, formats up to 10MB</p>
             </div>
 
-            <Upload />
+            <Upload
+              onComplete= {handleUploadComplete}
+            />
           </div>
         </div>
       </section>
@@ -83,7 +97,7 @@ export default function Home() {
                 <div className="badge">
                   <span>Community</span>
                 </div>
-              </div> 
+              </div>
 
               <div className="card-body">
                 <div>
@@ -91,12 +105,14 @@ export default function Home() {
 
                   <div className="meta">
                     <Clock size={12} />
-                    <span>{new Date('01.01.2027').toLocaleDateString()}</span>
+                    <span>{new Date("01.01.2027").toLocaleDateString()}</span>
                     <span>By DBA</span>
                   </div>
                 </div>
 
-                <div className="arrow"><ArrowUpRight size={18} /></div>
+                <div className="arrow">
+                  <ArrowUpRight size={18} />
+                </div>
               </div>
             </div>
           </div>
