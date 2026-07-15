@@ -1,5 +1,5 @@
 import { CheckCircle2, ImageIcon, UploadIcon } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useOutletContext } from 'react-router';
 import { PROGRESS_INTERVAL_MS, PROGRESS_STEP, REDIRECT_DELAY_MS } from '../lib/constants';
 
@@ -14,8 +14,21 @@ const Upload = ({ onComplete = () => {} }: UploadProps) => {
 
     const { isSignedIn } = useOutletContext<AuthContext>();
 
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const mountedRef = useRef(true);
+
+    useEffect(() => {
+        return () => {
+            mountedRef.current = false;
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
     const processFile = (selected: File) => {
         if (!isSignedIn) return;
+        if (!['image/jpeg', 'image/png'].includes(selected.type)) return;
 
         setFile(selected);
 
@@ -24,16 +37,22 @@ const Upload = ({ onComplete = () => {} }: UploadProps) => {
             const base64 = reader.result as string;
             let currentProgress = 0;
 
-            const interval = setInterval(() => {
+            intervalRef.current = setInterval(() => {
                 currentProgress += PROGRESS_STEP;
                 if (currentProgress >= 100) {
-                    clearInterval(interval);
+                    clearInterval(intervalRef.current!);
+                    intervalRef.current = null;
                     setProgress(100);
-                    setTimeout(() => onComplete(base64), REDIRECT_DELAY_MS);
+                    timeoutRef.current = setTimeout(() => {
+                        if (mountedRef.current) onComplete(base64);
+                    }, REDIRECT_DELAY_MS);
                 } else {
                     setProgress(currentProgress);
                 }
             }, PROGRESS_INTERVAL_MS);
+        };
+        reader.onerror = () => {
+            setFile(null);
         };
         reader.readAsDataURL(selected);
     };
