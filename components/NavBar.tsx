@@ -31,7 +31,7 @@ const NavBar = () => {
           <div className="brand">
             <Box className="logo" />
 
-            <span className="name">Roomify</span>
+            <span className="name">Roomifier</span>
           </div>
 
           <ul className="links">
