@@ -1,22 +1,21 @@
-import { puter } from "@heyputer/puter.js";
+import puter from "@heyputer/puter.js";
 import { createHostingSlug, fetchBlobFromUrl, getHostedUrl, getImageExtension, HOSTING_CONFIG_KEY, imageUrlToPngBlob, isHostedUrl } from "./utils";
 
 export const getOrCreateHostingConfig= async (): Promise<HostingConfig | null> => {
-    const existing = (await puter.kv.get(HOSTING_CONFIG_KEY)) as HostingConfig | null;
-
-    if (existing?.subdomain) return { subdomain: existing.subdomain };
-
-    const subdomain = createHostingSlug();
-
     try {
+        const existing = (await puter.kv.get(HOSTING_CONFIG_KEY)) as HostingConfig | null;
+
+        if (existing?.subdomain) return { subdomain: existing.subdomain };
+
+        const subdomain = createHostingSlug();
         const created = await puter.hosting.create(subdomain, '.');
 
         const record = { subdomain: created.subdomain};
 
         await puter.kv.set(HOSTING_CONFIG_KEY, { subdomain: created.subdomain });
         return record;
-    } catch (e) { 
-        console.warn(`Could not find subdomainm: ${e}`);
+    } catch (e) {
+        console.warn(`Could not create hosting config: ${e}`);
         return null;
     }
 }
