@@ -28,7 +28,7 @@ const Upload = ({ onComplete = () => {} }: UploadProps) => {
 
     const processFile = (selected: File) => {
         if (!isSignedIn) return;
-        if (!['image/jpeg', 'image/png'].includes(selected.type)) return;
+        if (!['image/jpeg', 'image/png', 'image/webp'].includes(selected.type)) return;
 
         setFile(selected);
 
@@ -89,7 +89,7 @@ const Upload = ({ onComplete = () => {} }: UploadProps) => {
                     <input
                         type="file"
                         className="drop-input"
-                        accept=".jpg,.jpeg,.png"
+                        accept=".jpg,.jpeg,.png,.webp"
                         disabled={!isSignedIn}
                         onChange={handleChange}
                     />
