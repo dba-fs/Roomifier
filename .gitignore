@@ -6,3 +6,12 @@
 # React Router
 /.react-router/
 /build/
+
+# Claude Code local skills
+/.agents/
+/.claude/
+/skills-lock.json
+/AGENTS.md
+/CLAUDE.md
+/CLAUDE.local.md
+/CLAUDE.local.md.example
