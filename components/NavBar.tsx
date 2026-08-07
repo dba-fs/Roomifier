@@ -35,10 +35,10 @@ const NavBar = () => {
           </div>
 
           <ul className="links">
-            <a href="#">Product</a>
-            <a href="#">Pricing</a>
-            <a href="#">Community</a>
-            <a href="#">Enterprise</a>
+            <a className="disabled" aria-disabled="true" title="Coming soon">Product</a>
+            <a className="disabled" aria-disabled="true" title="Coming soon">Pricing</a>
+            <a className="disabled" aria-disabled="true" title="Coming soon">Community</a>
+            <a className="disabled" aria-disabled="true" title="Coming soon">Enterprise</a>
           </ul>
         </div>
 

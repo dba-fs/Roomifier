@@ -95,7 +95,7 @@ export default function Home() {
             Start Building <ArrowRight className="icon" />
           </a>
 
-          <Button variant="secondary" size="lg" className="demo">
+          <Button variant="secondary" size="lg" className="demo" disabled title="Coming soon">
             Watch Demo
           </Button>
         </div>
