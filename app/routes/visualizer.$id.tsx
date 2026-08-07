@@ -158,7 +158,7 @@ const VisualizerId = () => {
               >
                 <Download className="w-4 h-4 mr-2" /> Export
               </Button>
-              <Button size="sm" onClick={() => {}} className="share">
+              <Button size="sm" disabled className="share" title="Coming soon">
                 <Share2 className="w-4 h-4 mr-2" />
                 Share
               </Button>
