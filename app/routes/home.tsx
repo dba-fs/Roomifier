@@ -3,7 +3,7 @@ import Navbar from "../../components/NavBar";
 import { ArrowRight, ArrowUpRight, Clock, Layers } from "lucide-react";
 import Upload from "../../components/Upload";
 import { Button } from "../../components/ui/Button";
-import { useNavigate } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { createProject, getProjects } from "../../lib/puter.action";
 
@@ -16,6 +16,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isSignedIn } = useOutletContext<AuthContext>();
   const [projects, setProjects] = useState<DesignItem[]>([]);
   const isCreatingProjectRef = useRef(false);
 
@@ -61,14 +62,16 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (!isSignedIn) return;
+
     const fetchProjects = async () => {
       const items = await getProjects();
 
       setProjects(items)
     }
-    
+
     fetchProjects();
-  }, []);
+  }, [isSignedIn]);
 
   return (
     <div className="home">
